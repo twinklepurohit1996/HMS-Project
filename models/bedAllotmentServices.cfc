@@ -1,39 +1,66 @@
 component singleton accessors="true"{
 
-    //Get patient name in dropdown in Appointment form Service 
-    public query function getPatient(){
-        var loc = {};
-        loc.query = new query();
-        loc.sql = "SELECT * FROM patient";
-        loc.query.setSQL(loc.sql);
-        loc.result = loc.query.execute().getResult();
-		return loc.result;
-    }
 
-    //Get department name in dropdown in Appointment form Service 
+    //Get department name in dropdown in Bed Allotment form Service 
     public query function getDept(){
         var loc = {};
         loc.query = new query();
-        loc.sql = "SELECT * FROM department";
+        loc.sql = "SELECT * FROM appointment LEFT JOIN department ON appointment.department_id = department.id group by department_id ";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
 		return loc.result;
     }
 
-
-    //Get doctor name in dropdown according to selected department name in Appointment form Service 
-    public array function getDoctorById(required numeric id){
+     //Get department bed total in dropdown according to selected department name in Bed Allotment form Service 
+     public array function getBedById(required numeric id){
         var loc = {};
         var loc.returnId = {};
         loc.query = new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql = "SELECT * FROM doctor WHERE doctor_department_id=:id";
+        loc.sql = "SELECT * FROM department WHERE id=:id";
         loc.query.setSQL(loc.sql);
         loc.query.setReturnType("array");
         loc.result = loc.query.execute().getResult();
         writeDump(loc.result);
         return loc.result;
     }
+
+     //Get patient name in dropdown according to selected department name in Bed Allotment form Service 
+     public array function getPatientById(required numeric id){
+        var loc = {};
+        var loc.returnId = {};
+        loc.query = new query();
+        loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
+        loc.sql = "SELECT * FROM appointment LEFT JOIN patient ON appointment.patient_id = patient.id WHERE department_id=:id";
+        loc.query.setSQL(loc.sql);
+        loc.query.setReturnType("array");
+        loc.result = loc.query.execute().getResult();
+        return loc.result;
+    }
+
+     //add appointment in appointment module
+     public any function saveAppointment(required struct formData){
+        var loc = {};
+        loc.query = new query();
+        loc.query.addParam(name="patient_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.patient_name#");
+		loc.query.addParam(name="department_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.department_name#");
+        loc.query.addParam(name="appointment_date", cfsqltype="cf_sql_date", value="#arguments.formData.appointment_date#"); 
+        loc.query.addParam(name="doctor_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_name#");
+        loc.query.addParam(name="admin_id", cfsqltype="cf_sql_integer", value="#arguments.admin_id#");
+        loc.sqlInsert = "INSERT INTO appointment SET patient_id=:patient_name,department_id=:department_name,doctor_id=:doctor_name,patient_token_id=:token_id,appointment_date=:appointment_date,appointment_time=:start_opd";
+        loc.sqlInsert &= ",created_by=:admin_id";
+        loc.query.setSQL(loc.sqlInsert);
+        loc.resultInsert = loc.query.execute().getPrefix(); 
+        if(loc.resultInsert.recordCount EQ 1){
+            loc.returnId = 	loc.resultInsert.generatedKey;
+        }
+        return loc.result;           
+    }
+
+
+/*
+
+   
 
     //add appointment in appointment module
     public any function saveAppointment(required struct formData,required numeric admin_id,required any start_opd,required any token_id,required any diff){
@@ -124,7 +151,7 @@ component singleton accessors="true"{
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getPrefix();
 		return loc.result;
-    }
+    } */
 
 }  
 

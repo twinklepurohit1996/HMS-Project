@@ -7,6 +7,7 @@ component extends="base" {
 	property name="doctorService" inject="doctorService";
 	property name="patientService" inject="patientService";
 	property name="appointmentService" inject="appointmentService";
+	property name="bedAllotmentServices" inject="bedAllotmentServices";
 
 	//Home page or Dashboard page display handler
     function index( event, rc, prc ) 
@@ -44,6 +45,13 @@ component extends="base" {
 		prc.resultDept=appointmentService.getDept();
         prc.resultPatient=appointmentService.getPatient();
 		event.setView( "dashboard/appointment/appointmentDisplay" );
+	}
+
+	//Bed Allotment page display handler
+	function bedAllotment( event, rc, prc ) 
+	{    
+		prc.resultDept=bedAllotmentServices.getDept();
+		event.setView( "dashboard/bedAllotment/bedAllotmentDisplay" );
 	}
 
 	//Logout Functionlity Handler

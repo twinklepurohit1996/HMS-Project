@@ -91,6 +91,7 @@
                           <tr>
                             <th>Department Name</th>
                             <th>Department Description</th>
+                            <th>Department Bed Total</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -121,6 +122,10 @@
                 <div class="mb-3">
                   <label class="col-form-label">Department Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" name="departmentName" id="departmentName" value="" placeholder="Enter a Department Name">
+                </div>
+                <div class="mb-3">
+                  <label class="col-form-label">Department Bed Total Number<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="department_bed_total" id="department_bed_total" value="" placeholder="Enter a Department Bed Total Number">
                 </div>
                 <div class="mb-3">
                   <label class="col-form-label">Department Details<span class="text-danger">*</span></label>

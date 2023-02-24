@@ -24,11 +24,12 @@ component singleton accessors="true"{
         loc.query = new query();
         loc.query.addParam(name="departmentName", cfsqltype="cf_sql_varchar", value="#arguments.formData.departmentName#");
 		loc.query.addParam(name="departmentDetails", cfsqltype="cf_sql_varchar", value="#arguments.formData.departmentDetails#");
+        loc.query.addParam(name="department_bed_total", cfsqltype="cf_sql_integer", value="#arguments.formData.department_bed_total#");
         loc.query.addParam(name="admin_id", cfsqltype="cf_sql_integer", value="#arguments.admin_id#");
 
         if(formData.id GT 0){
             loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.formData.id#");
-            loc.sql = "UPDATE department SET department_name=:departmentName,department_details=:departmentDetails";
+            loc.sql = "UPDATE department SET department_name=:departmentName,department_details=:departmentDetails,department_bed_total=:department_bed_total";
             loc.sql &= ",updated_by=:admin_id";
             loc.sql &= " where id =:id";
             loc.query.setSQL(loc.sql);
@@ -36,7 +37,7 @@ component singleton accessors="true"{
             return loc.result;
         }
         else{
-            loc.sql = "INSERT INTO department SET department_name=:departmentName,department_details=:departmentDetails";
+            loc.sql = "INSERT INTO department SET department_name=:departmentName,department_details=:departmentDetails,department_bed_total=:department_bed_total";
             loc.sql &= ",created_by=:admin_id";
             loc.query.setSQL(loc.sql);
             loc.result = loc.query.execute().getPrefix();
@@ -114,6 +115,7 @@ component singleton accessors="true"{
 				id = 0,
 				department_name = '',
 				department_details = '',
+                department_bed_total ='',
 			}
 		}
 		return result;

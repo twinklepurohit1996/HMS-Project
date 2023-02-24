@@ -2,7 +2,10 @@
     <script>
        $(document).ready( function () {     
         
-            
+        $.validator.addMethod("validNumber", function (value, element, options){
+            return /^[0-9]*$/.test(value);
+        }
+        );
             $('##addDept').on('hidden.bs.modal', function () {
                 $("##deptLabel").text("Add New Department")
                 $("##bb").text("Insert");
@@ -15,6 +18,7 @@
                 return /^[A-Za-z\s.]+$/.test(value);
             });
 
+           
             $("##addDepartmentForm").validate({
                 rules:{
                     departmentName:{
@@ -40,6 +44,10 @@
                         minlength:100,
                         maxlength:500,
                     },
+                    department_bed_total:{
+                        required:true,
+                        validNumber:true,
+                    },
                 },
                 messages:{
                     departmentName:{
@@ -53,6 +61,10 @@
                         required:"Department Details is Required",
                         minlength:"Minimum Length is 100",
                         maxlength:"Maximum Length is 500",
+                    },
+                    department_bed_total:{
+                        required:"Department Bed Total Number is required",
+                        validNumber:"Please Enter a valid bed number!!",
                     },
                 }
             });
@@ -79,6 +91,7 @@
                 columns: [
                     { data: 'department_name' },
                     { data: 'department_details' },
+                    { data: 'department_bed_total'},
                     { data: 'id',render: function(data,type,row){
                         var eye = row.isActive == 1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
                         return '<a href="javascript:void(0);" id="isActive" onclick="hideDept('+data+')"><i class="'+eye+'"></i></a><a href="javascript:void(0);" onclick="deleteDept('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDept('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
@@ -142,6 +155,7 @@ function deleteDept(id){
                 $('##id').val(result.id);
                 $('##departmentName').val(result.department_name);
                 $('##departmentDetails').val(result.department_details);
+                $('##department_bed_total').val(result.department_bed_total);
                 $("##bb").text("Update");
         }});
     }

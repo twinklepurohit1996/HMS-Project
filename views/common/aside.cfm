@@ -56,6 +56,14 @@
                         <div data-i18n="Analytics">Appointment</div>
                       </a>
                     </li>
+
+                    <!-- Appointment Module -->
+                    <li class="menu-item active">
+                      <a href="#event.buildLink('home.bedAllotment')#" class="menu-link">
+                        <i class="fa-solid fa-bed me-2"></i>
+                        <div data-i18n="Analytics">Bed Allotment</div>
+                      </a>
+                    </li>
                   </ul>
                 </aside>
 </cfoutput>
