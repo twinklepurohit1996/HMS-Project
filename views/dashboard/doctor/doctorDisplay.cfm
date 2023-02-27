@@ -97,7 +97,7 @@
       <th>Fees</th>
       <th>Date of Birth</th>
       <th>Dempartment</th>
-<!---       <th>Status</th> --->
+      <th>Doctor Status</th> 
       <th>Action</th>
     </tr>
   </thead>

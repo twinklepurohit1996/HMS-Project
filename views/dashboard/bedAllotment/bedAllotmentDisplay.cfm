@@ -86,16 +86,12 @@
   </div>
 </div>
 <div class="table-responsive px-3">
-<table class="table" >
+<table class="table" id="bedAllotmentList">
   <thead>
     <tr>
       <th>Patient Token ID</th>
       <th>Patient Name</th>
       <th>Department Name</th>
-      <th>Bed Allotment Number</th>
-      <th>Assigned Doctor</th>
-      <th>Admit Start Date</th>
-      <th>Admit End Date</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -132,8 +128,16 @@
               <select class="form-select"  name="department_id" id="department_id">
                 <option value="" selected>Select Department</option>
                   <cfloop query="prc.resultDept">
-                      <option value="#prc.resultDept.id#"># prc.resultDept.department_name#</option>
+                      <option value="#prc.resultDept.department_id#"># prc.resultDept.department_name#</option>
                   </cfloop>
+              </select>
+            </div>
+
+      
+            <div class="mb-2">
+              <label class="col-form-label">Bed Number</label>
+              <select class="form-select"  name="bed_number" id="bed_number">
+                <option value="" selected>Select Bed Number</option>
               </select>
             </div>
 
@@ -143,14 +147,6 @@
                 <option value="" selected>Select Patient</option>
               </select>
             </div>
-
-            <div class="mb-2">
-              <label class="col-form-label">Bed Number</label>
-              <select class="form-select"  name="bed_number" id="bed_number">
-                <option value="" selected>Select Bed Number</option>
-              </select>
-            </div>
-
             <div class="mb-2">
               <label class="col-form-label">Allotment Start Date</label>
               <div>
@@ -163,7 +159,10 @@
                 <input type="text" class="form-control" name="end_date" id="end_date" readonly/>
               </div>
             </div>
-
+            <div class="mb-2">
+              <label class="col-form-label">Admission Fees</label>
+              <input type="text" class="form-control" value="500" name="admit_fees" id="admit_fees">
+            </div>
             <div class="text-center mb-2">
                 <button type="submit" class="btn btn-primary" id="bb">Insert</button>
             </div>

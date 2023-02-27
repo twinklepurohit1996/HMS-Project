@@ -51,6 +51,8 @@ component extends="base" {
 	function bedAllotment( event, rc, prc ) 
 	{    
 		prc.resultDept=bedAllotmentServices.getDept();
+		// writeDump(prc.resultDept);
+		// abort;
 		event.setView( "dashboard/bedAllotment/bedAllotmentDisplay" );
 	}
 

@@ -203,9 +203,12 @@
 				return moment(data).format("MM-DD-YYYY");
 				} },
             { data: 'department_name' },
+            {data:'id',render: function(data,type,row){
+                var eye = row.isActive == 1 ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+                    return '<a href="javascript:void(0);" id="isActive"  onclick="hideDoctor('+data+')"><i class="'+eye+'"></i></a>';
+            }},
             { data: 'id',render: function(data,type,row){
-                var eye = row.isActive == 1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-				return '<a href="javascript:void(0);" id="isActive"  onclick="hideDoctor('+data+')"><i class="'+eye+'"></i></a><a href="javascript:void(0);" onclick="deleteDoctor('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDoctor('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
+				return '<a href="javascript:void(0);" onclick="deleteDoctor('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDoctor('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
 			}
         },
         ],
@@ -231,11 +234,15 @@
     
 
 function hideDoctor(data){
-        $.ajax({url:'doctor/changeStatus/id/'+data,
-            success: function(result){
-                $('##doctorList').DataTable().ajax.reload();
-            }
-    });
+
+            $.ajax({url:'doctor/changeStatus/id/'+data,
+                success: function(result){
+                    $('##doctorList').DataTable().ajax.reload();
+                }
+            });
+          
+
+       
 }
     function deleteDoctor(id)
     {

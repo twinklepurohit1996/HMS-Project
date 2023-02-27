@@ -71,7 +71,7 @@
                 }  
             });
 
-            $("##department_id").change(function(){
+      $("##department_id").change(function(){
                 var department_Id = $("##department_id option:selected").val();
                 console.log(department_Id);
                 $.ajax({url:'bedAllotment/getBed/id/'+department_Id,
@@ -92,16 +92,17 @@
                         console.log(result);
                         var html = '<option value="" >Select Patinet</option>';
                         $.each(result, function( data, value ) {
-                                html += "<option  value="+value.patient_id+">"+value.patient_name+"</option>";
+                                html += "<option  value="+value.patient_id+">"+value.patient_name
++"</option>";
                         });
                         $('##patient_id').html(html);
                     }
                 });
-            }); 
+            });  
 
-            /* $("##department_id").change(function(){
+         /*    $("##department_id").change(function(){
                 var department_Id = $("##department_id option:selected").val();
-                console.log(department_Id);
+                // console.log(department_Id);
                 $.ajax({url:'bedAllotment/getPatient/id/'+department_Id,
                     success: function(result){
                         console.log(result);
@@ -115,13 +116,13 @@
             }); */
 
 
-            $('##appointmentList').DataTable({
+            $('##bedAllotmentList').DataTable({
                 processing: true,
                 serverSide: true,
                 pageLength: 10,
                 pagination: 'datatablePagination',
                 ajax: {
-                    url: 'appointment/indexData',
+                    url: 'bedAllotment/indexData',
                     data: function(d){
                         var m = {};
                         m['draw'] = d.draw;
@@ -129,27 +130,16 @@
                         m["length"] = d.length;
                         m["search"] = d.search.value;
                         m["order"] = d.columns[d.order[0].column].data + ' ' + d.order[0].dir;
-
                         return m;
                     }
                 },
                 columns: [
+                    { data: 'patient_token_id' },
                     { data: 'patient_name' },
-                    { data: 'department_name' },
-                    {data: 'doctor_name'},
-                    {data:'patient_token_id'},
-                    {data: 'appointment_date',
-                    render: function ( data) 
-                        {
-                        return moment(data).format("MM-DD-YYYY");
-                        }},
-                    {data: 'appointment_time',
-                    render: function ( data) 
-                        {
-                        return moment(data).format("hh:mm:ss");
-                        }},
+                    {data: 'department_name'},
                     { data: 'id',render: function(data){
-                        return '<a href="javascript:void(0);" onclick="deleteAppointment('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a>'				
+                        // console.log(data);
+                        return '<a href="javascript:void(0);"><button  class="btn-success mx-3">Admit</button><button class="btn-danger">Discharge</button></i></a>'				
                     }},
                 ],
             });
@@ -157,32 +147,32 @@
 
 
 
-        function deleteAppointment(id)
-    {
-        Swal.fire({
-        title: 'Are you sure ?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '##3085d6',
-        cancelButtonColor: '##d33',
-        confirmButtonText: 'Yes, delete it!'
-        }).then((result) => 
-        {
-            if (result.isConfirmed) 
-            {
-                $.ajax({  url: 'appointment/delete/id/'+id, 
-                        success: function(result){
-                            Swal.fire(
-                                'Deleted!',
-                                'Your appointment has been deleted.',
-                                'success')
-                                $('##appointmentList').DataTable().ajax.reload();
-                    }});
-        }
-    });
+    //     function deleteAppointment(id)
+    // {
+    //     Swal.fire({
+    //     title: 'Are you sure ?',
+    //     text: "You won't be able to revert this!",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '##3085d6',
+    //     cancelButtonColor: '##d33',
+    //     confirmButtonText: 'Yes, delete it!'
+    //     }).then((result) => 
+    //     {
+    //         if (result.isConfirmed) 
+    //         {
+    //             $.ajax({  url: 'appointment/delete/id/'+id, 
+    //                     success: function(result){
+    //                         Swal.fire(
+    //                             'Deleted!',
+    //                             'Your appointment has been deleted.',
+    //                             'success')
+    //                             $('##appointmentList').DataTable().ajax.reload();
+    //                 }});
+    //     }
+    // });
 
-    }
+    // }
 
 
     

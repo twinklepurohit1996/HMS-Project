@@ -105,6 +105,11 @@
                     {
                     return moment(data).format("hh:mm:ss");
                     }},
+                {data:'id',render: function(data,type,row){
+                    // console.log(row.isAdmit );
+                    var admitStatus = row.isAdmit == 0 ? 'text-success fa-solid fa-toggle-off fa-xl' : 'text-success fa-solid fa-toggle-on fa-xl'
+                    return '<a href="javascript:void(0);" id="isAdmit" onclick="admitPatient('+data+','+row.isAdmit+','+row.patient_id+')"><i class="'+admitStatus+'"></i></a>';
+                }},
                 { data: 'id',render: function(data){
                     return '<a href="javascript:void(0);" onclick="deleteAppointment('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a>'				
                 }},
@@ -112,7 +117,16 @@
 	    });
     });
 
-
+    function admitPatient(data,isAdmit,patient_id)
+    {
+        $.ajax({url:'appointment/changeStatus/id/'+data+'/patient_id/'+patient_id,
+                success: function(result){
+                    console.log(isAdmit);
+                    console.log(result.GETDATA.DATA.PATIENT_NAME[0]);
+                    $('##appointmentList').DataTable().ajax.reload();
+                }
+        });
+    }
 
         function deleteAppointment(id)
     {

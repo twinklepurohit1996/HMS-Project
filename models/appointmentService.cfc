@@ -126,6 +126,25 @@ component singleton accessors="true"{
 		return loc.result;
     }
 
+     //Admit Status of patient in appointment Service
+     public function isAdmitPatient(required numeric id,required numeric patient_id){
+        var loc={};
+        loc.result = {RecordsUpdate: [],GetData:[]};
+        loc.query= new query();
+        loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
+        loc.query.addParam(name="patient_id", cfsqltype="cf_sql_integer", value="#arguments.patient_id#");
+
+        loc.sql1 = "SELECT * from patient where id=:patient_id";
+        loc.query.setSQL(loc.sql1);
+        loc.result.GetData = loc.query.execute().getResult();
+
+        loc.sql = "UPDATE appointment SET isAdmit=!isAdmit WHERE id =:id";
+        loc.query.setSQL(loc.sql);
+        loc.result.RecordsUpdate = loc.query.execute().getPrefix();
+        
+		return loc.result;
+    }
+
 }  
 
    

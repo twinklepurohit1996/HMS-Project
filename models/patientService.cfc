@@ -1,8 +1,6 @@
 component singleton accessors="true"{
-
     property name="BCrypt" inject="BCrypt@BCrypt";
-
-
+    
     //Patient Mobile number exixt check Service 
     public any function mCheck(required struct formData)
     {

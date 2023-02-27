@@ -3,6 +3,7 @@
     "whitespaceManagement":"white-space-pref",
 	"requestTimeout":"0,0,5,0",
 	"cacheDefaultObject":"coldbox",
+	"adminPassword":"password@123",
     "caches":{
         "coldbox":{
             "storage":"true",

@@ -94,7 +94,10 @@
                     { data: 'department_bed_total'},
                     { data: 'id',render: function(data,type,row){
                         var eye = row.isActive == 1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-                        return '<a href="javascript:void(0);" id="isActive" onclick="hideDept('+data+')"><i class="'+eye+'"></i></a><a href="javascript:void(0);" onclick="deleteDept('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDept('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
+                        return '<a href="javascript:void(0);" id="isActive" onclick="hideDept('+data+')"><i class="'+eye+'"></i></a>'				
+                    }},
+                    { data: 'id',render: function(data,type,row){
+                        return '<a href="javascript:void(0);" onclick="deleteDept('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDept('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
                     }},
                 ],
             });

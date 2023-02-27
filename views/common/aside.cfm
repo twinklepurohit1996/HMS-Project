@@ -57,6 +57,14 @@
                       </a>
                     </li>
 
+                     <!-- Prescriptions Module -->
+                   <!---   <li class="menu-item active">
+                      <a href="#event.buildLink('home.prescription')#" class="menu-link">
+                        <i class="fa-solid fa-prescription me-2"></i>
+                        <div data-i18n="Analytics">Prescriptions</div>
+                      </a>
+                    </li> --->
+
                     <!-- Appointment Module -->
                     <li class="menu-item active">
                       <a href="#event.buildLink('home.bedAllotment')#" class="menu-link">

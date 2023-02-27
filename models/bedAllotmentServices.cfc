@@ -5,7 +5,8 @@ component singleton accessors="true"{
     public query function getDept(){
         var loc = {};
         loc.query = new query();
-        loc.sql = "SELECT * FROM appointment LEFT JOIN department ON appointment.department_id = department.id group by department_id ";
+        loc.sql = "SELECT * FROM appointment LEFT JOIN department ON appointment.department_id = department.id where isAdmit = 1
+        group by department_id";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
 		return loc.result;
@@ -13,6 +14,7 @@ component singleton accessors="true"{
 
      //Get department bed total in dropdown according to selected department name in Bed Allotment form Service 
      public array function getBedById(required numeric id){
+      
         var loc = {};
         var loc.returnId = {};
         loc.query = new query();
@@ -21,7 +23,8 @@ component singleton accessors="true"{
         loc.query.setSQL(loc.sql);
         loc.query.setReturnType("array");
         loc.result = loc.query.execute().getResult();
-        writeDump(loc.result);
+        // writeDump(loc.result);
+        //   abort;
         return loc.result;
     }
 
@@ -31,15 +34,46 @@ component singleton accessors="true"{
         var loc.returnId = {};
         loc.query = new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql = "SELECT * FROM appointment LEFT JOIN patient ON appointment.patient_id = patient.id WHERE department_id=:id";
+        loc.sql = "SELECT * FROM appointment LEFT JOIN patient ON appointment.patient_id = patient.id WHERE appointment.isAdmit = 1 AND appointment.department_id=:id";
         loc.query.setSQL(loc.sql);
         loc.query.setReturnType("array");
         loc.result = loc.query.execute().getResult();
+        // writeDump(loc.result);
+        // abort;
         return loc.result;
     }
 
+     //Display bedAllotmentList using dataTable of Jquery in bedAllotment module
+     public struct function bedAllotmentList(required struct formData)
+     { 
+         var loc = {};
+         loc.res = {"total": 0, "records": []};
+         loc.query = new query();
+         loc.sql = "SELECT count(1) as total FROM appointment";
+         loc.query.setSQL(loc.sql);
+         loc.result = loc.query.execute().getResult();
+         loc.res.total = loc.result.total;
+         loc.sql = " SELECT *  FROM appointment LEFT JOIN patient ON appointment.patient_id = patient.id LEFT JOIN department ON appointment.department_id = department.id WHERE appointment.isAdmit = 1";
+         if(structKeyExists(arguments.formData, "search") AND len(arguments.formData.search) GT 0){
+             loc.query.addParam(name="search", cfsqltype="cf_sql_varchar", value="%#arguments.formData.search#%");
+             loc.sql &= " WHERE patient_name LIKE :search";
+         }
+         if(structKeyExists(arguments.formData, "order") AND len(trim(arguments.formData.order)) GT 0){
+             loc.sql &= " ORDER BY #arguments.formData.order#";
+         }
+         loc.sql &= " limit #formData.start#, #formData.length# ";
+         loc.query.setSQL(loc.sql);
+         loc.result = loc.query.execute().getResult();
+         writeDump(loc.result)
+         for(loc.i in loc.result){
+             arrayAppend(loc.res.records, loc.i);
+         }
+         return loc.res;
+     }
+
      //add appointment in appointment module
-     public any function saveAppointment(required struct formData){
+     public any function saveAppointment(required struct formData)
+     {
         var loc = {};
         loc.query = new query();
         loc.query.addParam(name="patient_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.patient_name#");
@@ -114,32 +148,7 @@ component singleton accessors="true"{
         }
     }
 
-    //Display Appointment using dataTable of Jquery in Appointment module
-    public struct function appointmentList(required struct formData)
-    { 
-        var loc = {};
-        loc.res = {"total": 0, "records": []};
-        loc.query = new query();
-        loc.sql = "SELECT count(1) as total FROM appointment";
-        loc.query.setSQL(loc.sql);
-        loc.result = loc.query.execute().getResult();
-        loc.res.total = loc.result.total;
-        loc.sql = " SELECT *  FROM appointment LEFT JOIN patient ON appointment.patient_id = patient.id LEFT JOIN department ON appointment.department_id = department.id LEFT JOIN doctor ON appointment.doctor_id = doctor.id  ";
-        if(structKeyExists(arguments.formData, "search") AND len(arguments.formData.search) GT 0){
-            loc.query.addParam(name="search", cfsqltype="cf_sql_varchar", value="%#arguments.formData.search#%");
-            loc.sql &= " WHERE patient_name LIKE :search OR doctor_name LIKE :search OR appointment_date LIKE :search OR department_name LIKE :search";
-        }
-        if(structKeyExists(arguments.formData, "order") AND len(trim(arguments.formData.order)) GT 0){
-            loc.sql &= " ORDER BY #arguments.formData.order#";
-        }
-        loc.sql &= " limit #formData.start#, #formData.length# ";
-        loc.query.setSQL(loc.sql);
-        loc.result = loc.query.execute().getResult();
-        for(loc.i in loc.result){
-            arrayAppend(loc.res.records, loc.i);
-        }
-		return loc.res;
-    }
+   
 
     //Delete appointment in appointment module
     public function deleteAppointment(required numeric id)
