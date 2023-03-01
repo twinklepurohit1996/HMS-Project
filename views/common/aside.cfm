@@ -57,14 +57,6 @@
                       </a>
                     </li>
 
-                     <!-- Prescriptions Module -->
-                   <!---   <li class="menu-item active">
-                      <a href="#event.buildLink('home.prescription')#" class="menu-link">
-                        <i class="fa-solid fa-prescription me-2"></i>
-                        <div data-i18n="Analytics">Prescriptions</div>
-                      </a>
-                    </li> --->
-
                     <!-- Appointment Module -->
                     <li class="menu-item active">
                       <a href="#event.buildLink('home.bedAllotment')#" class="menu-link">
@@ -72,6 +64,14 @@
                         <div data-i18n="Analytics">Bed Allotment</div>
                       </a>
                     </li>
+
+                      <!-- Nurse Module -->
+                      <li class="menu-item active">
+                        <a href="#event.buildLink('home.nurse')#" class="menu-link">
+                          <i class="fa-solid fa-user-nurse me-2"></i>                        
+                          <div data-i18n="Analytics">Nurse</div>
+                        </a>
+                      </li>
                   </ul>
                 </aside>
 </cfoutput>

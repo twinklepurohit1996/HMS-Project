@@ -92,9 +92,10 @@
                     { data: 'department_name' },
                     { data: 'department_details' },
                     { data: 'department_bed_total'},
+                    { data: 'department_reserved_bed'},
                     { data: 'id',render: function(data,type,row){
-                        var eye = row.isActive == 1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-                        return '<a href="javascript:void(0);" id="isActive" onclick="hideDept('+data+')"><i class="'+eye+'"></i></a>'				
+                        var eye = row.isActive == 0 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
+                        return '<a href="javascript:void(0);" id="isActive" onclick="hideDept('+data+','+row.isActive+', \''+row.department_name+'\')"><i class="'+eye+'"></i></a>'				
                     }},
                     { data: 'id',render: function(data,type,row){
                         return '<a href="javascript:void(0);" onclick="deleteDept('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDept('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
@@ -120,7 +121,7 @@ function deleteDept(id){
                 $.ajax({  url: 'department/delete/id/'+id, 
                         success: function(result){
                             console.log(result);
-                            if(result==true)
+                            if(result==false)
                             {
                                 Swal.fire(
                                 'Warning!',
@@ -141,12 +142,38 @@ function deleteDept(id){
         });
     }
 
-    function hideDept(data){
-        $.ajax({url:'department/changeStatus/id/'+data,
+    function hideDept(data,isActive,department_name){
+        var deptTitle="Department Status";
+        var deptText= `Would You like to active ${department_name} department?`;
+        var deptBtn="Yes, activate it!";
+        if(isActive==1)
+        {
+            deptTitle="Department Status";
+            deptText= `Would You like to deActive ${department_name} department?`;
+            deptBtn="Yes, deActivate it!";
+        }
+        Swal.fire({
+        title: deptTitle,
+        text: deptText,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##3085d6',
+        cancelButtonColor: '##d33',
+        confirmButtonText:  deptBtn
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({url:'department/changeStatus/id/'+data,
             success: function(result){
                 $('##deptList').DataTable().ajax.reload();
             }
         });
+        //     Swal.fire(
+        //     'Activated!',
+        //     'Your department is activated.',
+        //     'success'
+        //     )
+        }
+        })
     }
 
     function editDept(id){

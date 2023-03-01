@@ -92,6 +92,7 @@
                             <th>Department Name</th>
                             <th>Department Description</th>
                             <th>Department Bed Total</th>
+                            <th>Department Bed Alloted</th>
                             <th>Active Department</th>
                             <th>Action</th>
                           </tr>

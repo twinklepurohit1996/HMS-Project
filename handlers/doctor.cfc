@@ -46,8 +46,10 @@ component extends="base" {
 
 	//Delete Doctor Handler
     function delete(event,rc,prc){
-		prc.result=doctorService.deleteDoctor(rc.id);
-        relocate("home.doctor");
+		var result=doctorService.deleteDoctor(rc.id);
+		event.renderData( data=result, type="json" );
+
+        // relocate("home.doctor");
 	}
 
 	//Edit Doctor Handler

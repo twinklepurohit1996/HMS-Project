@@ -106,9 +106,9 @@
                     return moment(data).format("hh:mm:ss");
                     }},
                 {data:'id',render: function(data,type,row){
-                    // console.log(row.isAdmit );
+                    console.log( );
                     var admitStatus = row.isAdmit == 0 ? 'text-success fa-solid fa-toggle-off fa-xl' : 'text-success fa-solid fa-toggle-on fa-xl'
-                    return '<a href="javascript:void(0);" id="isAdmit" onclick="admitPatient('+data+','+row.isAdmit+','+row.patient_id+')"><i class="'+admitStatus+'"></i></a>';
+                    return '<a href="javascript:void(0);" id="isAdmit" onclick="admitPatient('+data+','+row.isAdmit+', \''+row.patient_name+'\')"><i class="'+admitStatus+'"></i></a>';
                 }},
                 { data: 'id',render: function(data){
                     return '<a href="javascript:void(0);" onclick="deleteAppointment('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a>'				
@@ -117,15 +117,39 @@
 	    });
     });
 
-    function admitPatient(data,isAdmit,patient_id)
+    function admitPatient(data,isAdmit,name)
     {
-        $.ajax({url:'appointment/changeStatus/id/'+data+'/patient_id/'+patient_id,
+        // console.log(isAdmit);
+        var admitTitle="Admit Patient";
+        var admitBtn="Yes, Admit it!";
+        var admitText=`Do you want to admit ${name}?`;
+        if(isAdmit==1)
+        {
+            admitBtn="Cancel Admission";
+            admitTitle="Cancel Admission of Patient";
+            admitText=`Remove cancelation of ${name}?`;
+        }
+        Swal.fire({
+        title: admitTitle,
+        text: admitText,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '##3085d6',
+        cancelButtonColor: '##d33',
+        confirmButtonText: admitBtn
+        }).then((result) => 
+        {
+            if (result.isConfirmed) 
+            {
+                $.ajax({url:'appointment/changeStatus/id/'+data,
                 success: function(result){
-                    console.log(isAdmit);
-                    console.log(result.GETDATA.DATA.PATIENT_NAME[0]);
                     $('##appointmentList').DataTable().ajax.reload();
                 }
         });
+        }
+    }); 
+
+      
     }
 
         function deleteAppointment(id)

@@ -14,7 +14,7 @@ component singleton accessors="true"{
     public query function getDept(){
         var loc = {};
         loc.query = new query();
-        loc.sql = "SELECT * FROM department";
+        loc.sql = "SELECT * FROM department WHERE isActive = 1";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
 		return loc.result;
@@ -27,7 +27,7 @@ component singleton accessors="true"{
         var loc.returnId = {};
         loc.query = new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql = "SELECT * FROM doctor WHERE doctor_department_id=:id";
+        loc.sql = "SELECT * FROM doctor WHERE doctor_department_id=:id AND isActive=1";
         loc.query.setSQL(loc.sql);
         loc.query.setReturnType("array");
         loc.result = loc.query.execute().getResult();
@@ -127,21 +127,13 @@ component singleton accessors="true"{
     }
 
      //Admit Status of patient in appointment Service
-     public function isAdmitPatient(required numeric id,required numeric patient_id){
+     public function isAdmitPatient(required numeric id){
         var loc={};
-        loc.result = {RecordsUpdate: [],GetData:[]};
         loc.query= new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.query.addParam(name="patient_id", cfsqltype="cf_sql_integer", value="#arguments.patient_id#");
-
-        loc.sql1 = "SELECT * from patient where id=:patient_id";
-        loc.query.setSQL(loc.sql1);
-        loc.result.GetData = loc.query.execute().getResult();
-
         loc.sql = "UPDATE appointment SET isAdmit=!isAdmit WHERE id =:id";
         loc.query.setSQL(loc.sql);
-        loc.result.RecordsUpdate = loc.query.execute().getPrefix();
-        
+        loc.result = loc.query.execute().getPrefix();
 		return loc.result;
     }
 

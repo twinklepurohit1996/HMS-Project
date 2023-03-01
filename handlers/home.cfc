@@ -8,6 +8,7 @@ component extends="base" {
 	property name="patientService" inject="patientService";
 	property name="appointmentService" inject="appointmentService";
 	property name="bedAllotmentServices" inject="bedAllotmentServices";
+	property name="nurseService" inject="nurseService";
 
 	//Home page or Dashboard page display handler
     function index( event, rc, prc ) 
@@ -32,6 +33,14 @@ component extends="base" {
 		event.setView( "dashboard/doctor/doctorDisplay" );
 	}
 
+	//Nurse page display handler
+	function nurse( event, rc, prc ) 
+	{    
+        prc.result=nurseService.getDept();
+		event.setView( "dashboard/nurse/nurseDisplay" );
+	}
+
+
 	//Patient page display handler
 	function patient( event, rc, prc ) 
 	{    
@@ -50,9 +59,6 @@ component extends="base" {
 	//Bed Allotment page display handler
 	function bedAllotment( event, rc, prc ) 
 	{    
-		prc.resultDept=bedAllotmentServices.getDept();
-		// writeDump(prc.resultDept);
-		// abort;
 		event.setView( "dashboard/bedAllotment/bedAllotmentDisplay" );
 	}
 

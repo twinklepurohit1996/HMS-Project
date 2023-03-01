@@ -73,33 +73,31 @@
 
         <div class="container-xxl flex-grow-1 container-p-y">
           <h4 class="fw-bold py-2 mb-4"><span class="text-dark fw-light">Dashboard /</span>Bed Allotment</h4>
-          <form id="frm-example">
- <!-- Basic Bootstrap Table -->
- <div class="card ">
-            
-  <div class="d-flex justify-content-between">
-      <div class="card-header">
-          <h5>Bed Allotment List</h5>
-  </div>
-  <div class="card-action">
-      <button class=" btn btn-success my-2 me-4"  type="button" id="addBtn" data-bs-toggle="modal" data-bs-target="##bedAllotment" data-bs-whatever="@getbootstrap" >Bed Allotment</button>
-  </div>
-</div>
-<div class="table-responsive px-3">
-<table class="table" id="bedAllotmentList">
-  <thead>
-    <tr>
-      <th>Patient Token ID</th>
-      <th>Patient Name</th>
-      <th>Department Name</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-</table>
-</div>
-</div>
-<!--/ Basic Bootstrap Table -->
-          </form>
+            <!-- Basic Bootstrap Table -->
+            <div class="card ">
+                        
+              <div class="d-flex justify-content-between">
+                  <div class="card-header">
+                      <h5>Bed Allotment List</h5>
+              </div>
+              <div class="card-action">
+              </div>
+            </div>
+            <div class="table-responsive px-3">
+            <table class="table" id="bedAllotmentList">
+              <thead>
+                <tr>
+                  
+                  <th>Patient Name</th>
+                  <th>Department Name</th>
+                  <th>Bed Number</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
+            </div>
+            </div>
+            <!--/ Basic Bootstrap Table -->
          
         </div>
         </div>
@@ -107,69 +105,4 @@
 </div>
 </div>
 
-
-
-<div class="modal fade" id="bedAllotment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-xl">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="bedAllotmentLabel">Add New Bed Allotment</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeBtn"></button>
-    </div>
-    <div class="modal-body">
-      <form method="POST" id="bedAllotmentForm" action="#event.buildLink('bedAllotment.addAllotment')#" >
-        
-            <div class="mb-2">
-                <input type="hidden" class="form-control" name="id" value="0" id="id"/>
-            </div>
-
-            <div class="mb-2">
-              <label class="col-form-label">Department Name</label>
-              <select class="form-select"  name="department_id" id="department_id">
-                <option value="" selected>Select Department</option>
-                  <cfloop query="prc.resultDept">
-                      <option value="#prc.resultDept.department_id#"># prc.resultDept.department_name#</option>
-                  </cfloop>
-              </select>
-            </div>
-
-      
-            <div class="mb-2">
-              <label class="col-form-label">Bed Number</label>
-              <select class="form-select"  name="bed_number" id="bed_number">
-                <option value="" selected>Select Bed Number</option>
-              </select>
-            </div>
-
-            <div class="mb-2">
-              <label class="col-form-label">Patient Name</label>
-              <select class="form-select" name="patient_id" id="patient_id">
-                <option value="" selected>Select Patient</option>
-              </select>
-            </div>
-            <div class="mb-2">
-              <label class="col-form-label">Allotment Start Date</label>
-              <div>
-                <input type="text" class="form-control" name="start_date" id="start_date" readonly/>
-              </div>
-            </div>
-            <div class="mb-2">
-              <label class="col-form-label">Allotment End Date</label>
-              <div>
-                <input type="text" class="form-control" name="end_date" id="end_date" readonly/>
-              </div>
-            </div>
-            <div class="mb-2">
-              <label class="col-form-label">Admission Fees</label>
-              <input type="text" class="form-control" value="500" name="admit_fees" id="admit_fees">
-            </div>
-            <div class="text-center mb-2">
-                <button type="submit" class="btn btn-primary" id="bb">Insert</button>
-            </div>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-</div>
 </cfoutput>

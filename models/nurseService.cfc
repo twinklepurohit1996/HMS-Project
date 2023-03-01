@@ -2,13 +2,13 @@ component singleton accessors="true"{
 
     property name="BCrypt" inject="BCrypt@BCrypt";
 
-    //Email Exist Check For Doctor Service
+    //Email Exist Check For Nurse Service
     public any function eCheck(required struct formData)
     {
         var loc = {};
         var loc.return=true;
         loc.query = new query();
-        loc.query.addParam(name="doctor_email", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_email#");
+        loc.query.addParam(name="nurse_email", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_email#");
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.formData.id#");
         loc.sql = "SELECT * FROM doctor WHERE id !=:id AND  doctor_email=:doctor_email ";
         loc.query.setSQL(loc.sql);

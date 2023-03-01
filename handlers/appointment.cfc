@@ -49,8 +49,8 @@ component extends="base" {
 
 	//Admit Status Handler
 	function changeStatus(event,rc,prc){
-		var appointmentData = appointmentService.isAdmitPatient(rc.id,rc.patient_id);
-		event.renderData( data=appointmentData, type="json" );
+		prc.appointmentData = appointmentService.isAdmitPatient(rc.id);
+        relocate("home.appointment");
 	}
 
 }

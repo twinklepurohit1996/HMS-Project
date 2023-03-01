@@ -99,6 +99,7 @@ component singleton accessors="true"{
             loc.query.execute();
             loc.return= true;
         }
+       
         return loc.return; 
        
     }
