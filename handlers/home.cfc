@@ -15,8 +15,10 @@ component extends="base" {
 	{    
 		prc.dataDept=homeService.totalDepartment();
 		prc.dataDoctor=homeService.totalDoctor();
+		prc.dataNurse=homeService.totalNurse();
 		prc.dataPatient=homeService.totalPatient();
 		prc.dataAppointment=homeService.totalAppointment();
+		prc.dataBedAllotment=homeService.totalBedAllotment();
 		event.setView( "dashboard/home" );
 	}
 

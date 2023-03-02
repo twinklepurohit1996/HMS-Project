@@ -65,33 +65,100 @@
                     <div class="row">
                       <div class="col-lg-3 col-md-6 col-3 mb-2">
                         <div class="card" style="background-color:##d7f5ab;">
-                          <div class="card-body">
+                          <div class="card-body" style="position: relative;">
                             <div class="card-title d-flex align-items-start justify-content-between">
                               <div class="avatar flex-shrink-0">
-                                <i class="fa-solid fa-mask-face  text-success"></i>
+                                <i class="fa-solid fa-mask-face  text-success fa-lg"></i>
                               </div>
                             </div>
-                            <span class="fw-semibold d-block mb-1 text-success">Departments</span>
-                            <small class="text-success fw-semibold">#prc.dataDept.TOTAL#</small>
+                            <div class="text-success fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataDept.total#</div>
+                            <span class="fw-semibold d-block mb-1 text-success fs-5">Departments</span>
+                            
                           </div>
                         </div>
                       </div>
                       <div class="col-lg-3 col-md-6 col-3 mb-2">
                         <div class="card" style="background-color:##f5e9ab;">
-                          <div class="card-body">
+                          <div class="card-body" style="position: relative;">
                             <div class="card-title d-flex align-items-start justify-content-between">
                               <div class="avatar flex-shrink-0">
-                                <i class=" text-warning fa-solid fa-user-doctor"></i>
+                                <i class=" text-warning fa-solid fa-user-doctor fa-lg"></i>
                               </div>
                             </div>
-                            <span class="fw-semibold d-block mb-1 text-warning">Doctors</span>
-                            <small class="text-warning fw-semibold">#prc.dataDoctor.TOTAL#</small>
+                            <div class="text-warning fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataDoctor.total#</div>
+                            <span class="fw-semibold d-block mb-1 text-warning fs-5">Doctors</span>
+                  
                           </div>
                         </div>
                       </div>
 
                       <div class="col-lg-3 col-md-6 col-3 mb-2">
                         <div class="card" style="background-color:##f08989;">
+                            <div class="card-body" style="position: relative;">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                  <i class="text-danger fa-solid fa-hospital-user fa-lg"></i>                         
+                                </div>
+                              </div>
+                              <div class="text-danger fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataPatient.total#</div>
+                              <span class="fw-semibold d-block mb-1 text-danger fs-5 ">Patients</span>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-6 col-3 mb-2">
+                        <div class="card" style="background-color:##9bb9e8;">
+                          <div class="card-body" style="position: relative;">
+                            <div class="card-title d-flex align-items-start justify-content-between">
+                              <div class="avatar flex-shrink-0">
+                                <i class="text-primary fa-solid fa-calendar-check fa-lg"></i>                        
+                              </div>
+                            </div>
+                            <span class="fw-semibold d-block mb-1 text-primary fs-5">Appointments</span>
+                            <div class="text-primary fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataAppointment.total#</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>   
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 order-0">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-6 col-3 mb-2">
+
+                        <div class="card" style="background-color:##f5e9ab;">
+                          <div class="card-body" style="position: relative;">
+                            <div class="card-title d-flex align-items-start justify-content-between">
+                              <div class="avatar flex-shrink-0">
+                                <i class="fa-solid fa-user-nurse text-warning fa-lg"></i>
+                              </div>
+                              <div class="text-warning fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataNurse.TOTAL#</div>
+                              </div>
+                              <span class="fw-semibold d-block mb-1 text-warning fs-5">Nurse</span>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-6 col-3 mb-2">
+                          <div class="card" style="background-color:##9bb9e8;">
+                            <div class="card-body" style="position: relative;">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0">
+                                  <i class="text-primary fa-solid fa-bed fa-lg"></i>
+                                </div>
+                              </div>
+                              <div class="text-primary fw-semibold" style="font-size: 40px;position: absolute; right: 40px;top: 10px;">#prc.dataBedAllotment.TOTAL#</div>
+                              <span class="fw-semibold d-block mb-1 text-primary fs-5">Bed Reserved</span>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      <div class="col-lg-3 col-md-6 col-3 mb-2">
+                        <!--- <div class="card" style="background-color:##f08989;">
                             <div class="card-body">
                               <div class="card-title d-flex align-items-start justify-content-between">
                                 <div class="avatar flex-shrink-0">
@@ -101,11 +168,11 @@
                               <span class="fw-semibold d-block mb-1 text-danger ">Patients</span>
                               <small class="text-danger fw-semibold">#prc.dataPatient.total#</small>
                             </div>
-                        </div>
+                        </div> --->
                       </div>
 
                       <div class="col-lg-3 col-md-6 col-3 mb-2">
-                        <div class="card" style="background-color:##9bb9e8;">
+                        <!--- <div class="card" style="background-color:##9bb9e8;">
                           <div class="card-body">
                             <div class="card-title d-flex align-items-start justify-content-between">
                               <div class="avatar flex-shrink-0">
@@ -115,15 +182,17 @@
                             <span class="fw-semibold d-block mb-1 text-primary">Appointments</span>
                             <small class="text-primary fw-semibold">#prc.dataAppointment.total#</small>
                           </div>
-                        </div>
+                        </div> --->
                       </div>
 
                     </div>
                   </div>
-                </div>   
+                </div>
             </div>   
-          </div>
+        </div>
       </div>
+
+      
     </div>
   </div>
 </cfoutput>

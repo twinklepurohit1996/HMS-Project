@@ -20,6 +20,16 @@ component singleton accessors="true"{
 		return loc.result;
     }
 
+     //Display total number of nurse count store in database
+     public query function totalNurse(){
+        var loc = {};
+        loc.query = new query();
+        loc.sql = "SELECT count(1) as total FROM nurse";
+        loc.query.setSQL(loc.sql);
+        loc.result = loc.query.execute().getResult();
+		return loc.result;
+    }
+
     //Display total number of patient count store in database
     public query function totalPatient(){
         var loc = {};
@@ -35,6 +45,16 @@ component singleton accessors="true"{
         var loc = {};
         loc.query = new query();
         loc.sql = "SELECT count(1) as total FROM appointment";
+        loc.query.setSQL(loc.sql);
+        loc.result = loc.query.execute().getResult();
+		return loc.result;
+    }
+
+     //Display total number of bed alloted count store in database
+     public query function totalBedAllotment(){
+        var loc = {};
+        loc.query = new query();
+        loc.sql = "SELECT SUM(isbedAllotment) as total FROM appointment ";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
 		return loc.result;
