@@ -1,16 +1,16 @@
 <cfoutput>
     <script>
        $(document).ready( function () {
-        $("##doctor_password").attr("required", "true");   
+        $("##nurse_password").attr("required", "true");   
         $("##image").attr("required", "true");
 
         $("##imageText").hide();
-        $('##addDoctor').on('hidden.bs.modal', function () {
-                $("##doctorLabel").text("Add New Doctor")
+        $('##addNurse').on('hidden.bs.modal', function () {
+                $("##nurseLabel").text("Add New Nurse")
                 $("##bb").text("Insert");
                 $("##id").val("0");
-                $('##addDoctor form')[0].reset();
-                $( "##addDoctorForm" ).validate().resetForm();
+                $('##addNurse form')[0].reset();
+                $( "##addNurseForm" ).validate().resetForm();
 
         });
 
@@ -28,36 +28,31 @@
             return /^(\+\d{1,3}[- ]?)?\d{10}$/.test(value);
         }
         );
-
-        $.validator.addMethod("validFees", function (value, element, options){
-            return /^[0-9]*$/.test(value);
-        }
-        );
         
-        $("##addDoctorForm").validate({
+        $("##addNurseForm").validate({
         rules:{
-            doctor_name:{
+            nurse_name:{
                 required:true,
                 minlength:5,
                 maxlength:20,
                 validName: true
             },
-            doctor_education:{
+            nurse_education:{
                 required:true,
                 minlength:2,
                 maxlength:100,
             },
-            doctor_mobile:{
+            nurse_mobile:{
                 required:true,
                 minlength:10,
                 maxlength:10,
                 validMobile:true,
                 remote: {
-                url: "doctor/mobCheck",
+                url: "nurse/mobCheck",
                 type: "post",
                 data: {
-                    doctor_mobile: function() {
-                        return $("##doctor_mobile").val(); 
+                    nurse_mobile: function() {
+                        return $("##nurse_mobile").val(); 
                     },
                     id: function() {
                         return $("##id").val(); 
@@ -65,27 +60,21 @@
                 }
             }
             },
-            doctor_fees:{
-                required:true,
-                minlength:2,
-                maxlength:10,
-                validFees:true,
-            },
-            doctor_address:{
+            nurse_address:{
                 required:true,
                 minlength:10,
                 maxlength:50,
             },
-            doctor_email:{
+            nurse_email:{
                 required:true,
                 minlength:10,
                 maxlength:50,
                 remote: {
-                url: "doctor/emailCheck",
+                url: "nurse/emailCheck",
                 type: "post",
                 data: {
-                    doctor_email: function() {
-                        return $("##doctor_email").val(); 
+                    nurse_email: function() {
+                        return $("##nurse_email").val(); 
                     },
                     id: function() {
                         return $("##id").val(); 
@@ -93,17 +82,17 @@
                 }
             }
             },
-            doctor_password:{
+            nurse_password:{
             
                 minlength:5,
                 maxlength:100,
                 
             },
-            doctor_dob:{
+            nurse_dob:{
                 required:true,
             },
          
-            doctor_department_id:{
+            nurse_department_id:{
                 required:true,
             },
             
@@ -115,66 +104,60 @@
                 $(element).closest('.form-select').removeClass('has-error').addClass('has-success');
             },
         messages:{
-            doctor_name:{
-                required:"Doctor Name is Required",
+            nurse_name:{
+                required:"Nurse Name is Required",
                 minlength:"Minimum Length is 5",
                 maxlength:"Maximum Length is 20",
-                validName:'Please enter a valid doctor name',
+                validName:'Please enter a valid nurse name',
             },
-            doctor_education:{
-                required:"Doctor Education is Required",
+            nurse_education:{
+                required:"Nurse Education is Required",
                 minlength:"Minimum Length is 2",
                 maxlength:"Maximum Length is 100",
             },
-            doctor_mobile:{
-                required:"Doctor Mobile is Required",
+            nurse_mobile:{
+                required:"Nurse Mobile is Required",
                 minlength:"Minimum Length is 10",
                 maxlength:"Maximum Length is 10",
                 validMobile:"Enter a valid mobile number",
                 remote:"Mobile Number Already Exist!!!",
             },
-            doctor_fees:{
-                required:"Doctor Fees is Required",
-                minlength:"Minimum Length is 2",
-                maxlength:"Maximum Length is 10",
-                validFees:"Please Enter a valid doctor fees",
-            },
-            doctor_address:{
-                required:"Doctor Address is Required",
+            nurse_address:{
+                required:"Nurse Address is Required",
                 minlength:"Minimum Length is 10",
                 maxlength:"Maximum Length is 100",
             },
-            doctor_email:{
-                required:"Doctor Email is Required",
+            nurse_email:{
+                required:"Nurse Email is Required",
                 minlength:"Minimum Length is 10",
                 maxlength:"Maximum Length is 50",
                 remote: "Email address Already Exist!!!",
             },
-            doctor_password:{
-                required:"Doctor Password is Required",
+            nurse_password:{
+                required:"Nurse Password is Required",
                 minlength:"Minimum Length is 5",
                 maxlength:"Maximum Length is 20",
             },
-            doctor_dob:{
-                required:"Doctor Date of Birth is Required",
+            nurse_dob:{
+                required:"Nurse Date of Birth is Required",
             },
            image:{
-                required:"Doctor Image is Required",
+                required:"Nurse Image is Required",
             },
-            doctor_department_id:{
-                required:"Doctor Department is Required",
+            nurse_department_id:{
+                required:"Nurse Department is Required",
             },
         }
          
     });
 
-    $('##doctorList').DataTable({
+    $('##nurseList').DataTable({
 		processing: true,
         serverSide: true,
 		pageLength: 10,
 		pagination: 'datatablePagination',
 		ajax: {
-			url: 'doctor/indexData',
+			url: 'nurse/indexData',
 			data: function(d){
 				var m = {};
 				m['draw'] = d.draw;
@@ -187,17 +170,16 @@
 		},
 		columns: [
            
-            { data: 'doctor_name' },
-            {data:'doctor_image', 
+            { data: 'nurse_name' },
+            {data:'nurse_image', 
 			render: function ( data) 
 				{
-				return '<img src="includes/upload/doctor/'+data+'" width="30" height="30">' 
+				return '<img src="includes/upload/nurse/'+data+'" width="30" height="30">' 
 				}
             },
-            { data: 'doctor_mobile' },
-            { data: 'doctor_email' },
-            { data: 'doctor_fees'},
-            { data: 'doctor_dob' ,
+            { data: 'nurse_mobile' },
+            { data: 'nurse_email' },
+            { data: 'nurse_dob' ,
 			render: function ( data) 
 				{
 				return moment(data).format("MM-DD-YYYY");
@@ -205,17 +187,14 @@
             { data: 'department_name' },
             {data:'id',render: function(data,type,row){
                 var eye = row.isActive == 1 ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
-                    return '<a href="javascript:void(0);" id="isActive"  onclick="hideDoctor('+data+','+row.isActive+', \''+row.doctor_name+'\')"><i class="'+eye+'"></i></a>';
+                    return '<a href="javascript:void(0);" id="isActive"  onclick="hideNurse('+data+','+row.isActive+', \''+row.nurse_name+'\')"><i class="'+eye+'"></i></a>';
             }},
             { data: 'id',render: function(data,type,row){
-				return '<a href="javascript:void(0);" onclick="deleteDoctor('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editDoctor('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
+				return '<a href="javascript:void(0);" onclick="deleteNurse('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editNurse('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
 			}
         },
         ],
 	});
-
-
-    
 
     $('##image').change(function(){
             const file = this.files[0];
@@ -230,17 +209,14 @@
     
 });
 
-
-    
-
-function hideDoctor(data,isActive,doctor_name){
-    var deptTitle="Doctor Status";
-        var deptText= `Would You like to active ${doctor_name}?`;
+function hideNurse(data,isActive,nurse_name){
+    var deptTitle="Nurse Status";
+        var deptText= `Would You like to active ${nurse_name}?`;
         var deptBtn="Yes, activate it!";
         if(isActive==1)
         {
-            deptTitle="Doctor Status";
-            deptText= `Would You like to deActive ${doctor_name}?`;
+            deptTitle="Nurse Status";
+            deptText= `Would You like to deActive ${nurse_name}?`;
             deptBtn="Yes, deActivate it!";
         }
         Swal.fire({
@@ -253,9 +229,9 @@ function hideDoctor(data,isActive,doctor_name){
         confirmButtonText:  deptBtn
         }).then((result) => {
         if (result.isConfirmed) {
-            $.ajax({url:'doctor/changeStatus/id/'+data,
+            $.ajax({url:'nurse/changeStatus/id/'+data,
                 success: function(result){
-                    $('##doctorList').DataTable().ajax.reload();
+                    $('##nurseList').DataTable().ajax.reload();
                 }
             });
         }
@@ -265,7 +241,7 @@ function hideDoctor(data,isActive,doctor_name){
 
        
 }
-    function deleteDoctor(id)
+    function deleteNurse(id)
     {
         Swal.fire({
         title: 'Are you sure ?',
@@ -280,34 +256,14 @@ function hideDoctor(data,isActive,doctor_name){
             if (result.isConfirmed) 
             {
 
-               /*  $.ajax({  url: 'doctor/delete/id/'+id, 
+                $.ajax({  url: 'nurse/delete/id/'+id, 
                         success: function(result){
                             Swal.fire(
                                 'Deleted!',
-                                'Your doctor has been deleted.',
+                                'Your nurse has been deleted.',
                                 'success')
-                                $('##doctorList').DataTable().ajax.reload();
-                    }}); */
-                    $.ajax({  url: 'doctor/delete/id/'+id, 
-                        success: function(result){
-                            console.log(result);
-                            if(result==false)
-                            {
-                                Swal.fire(
-                                'Warning!',
-                                'Doctor is already assigned to a patient!!',
-                                'warning')                               
-                            }
-                            else
-                            {
-                                Swal.fire(
-                                'Deleted!',
-                                'Your doctor has been deleted.',
-                                'success')
-                                $('##doctorList').DataTable().ajax.reload();
-                            }
-                    }
-                });
+                                $('##nurseList').DataTable().ajax.reload();
+                    }});
         }
     });
 
@@ -315,27 +271,28 @@ function hideDoctor(data,isActive,doctor_name){
 
 
  
-    function editDoctor(id){
-    $.ajax({  url: 'doctor/edit/id/'+id, 
+    function editNurse(id){
+    $.ajax({  url: 'nurse/edit/id/'+id, 
         success: function(result){
-            $( "##addDoctorForm" ).validate().resetForm();
-            $("##doctorLabel").text("Edit Doctor")
-            $('##addDoctor').modal('show');
-            $("##doctor_password").removeAttr("required", "true");
+            console.log(result);
+
+            $( "##addNurseForm" ).validate().resetForm();
+            $("##nurseLabel").text("Edit Nurse")
+            $('##addNurse').modal('show');
+            $("##nurse_password").removeAttr("required", "true");
             $("##image").removeAttr("required", "true");
             $("##imageText").show();
             $("##imgPreview").hide();
 
             $('##id').val(result.id);
-            $('##doctor_name').val(result.doctor_name);
-            $('##doctor_education').val(result.doctor_education);
-            $('##imageText').val(result.doctor_image);
-            $('##doctor_fees').val(result.doctor_fees);
-            $('##doctor_mobile').val(result.doctor_mobile);
-            $('##doctor_address').val(result.doctor_address);
-            $('##doctor_email').val(result.doctor_email);
-            $('##doctor_dob').val(moment(result.dob).format("YYYY-MM-DD"));
-            $('##doctor_department_id').val(result.doctor_department_id);
+            $('##nurse_name').val(result.nurse_name);
+            $('##nurse_education').val(result.nurse_education);
+            $('##imageText').val(result.nurse_image);
+            $('##nurse_mobile').val(result.nurse_mobile);
+            $('##nurse_address').val(result.nurse_address);
+            $('##nurse_email').val(result.nurse_email);
+            $('##nurse_dob').val(moment(result.dob).format("YYYY-MM-DD"));
+            $('##nurse_department_id').val(result.nurse_department_id);
             $("##bb").text("Update"); 
     }});
 }

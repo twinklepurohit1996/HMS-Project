@@ -10,7 +10,7 @@ component singleton accessors="true"{
         loc.query = new query();
         loc.query.addParam(name="nurse_email", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_email#");
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.formData.id#");
-        loc.sql = "SELECT * FROM doctor WHERE id !=:id AND  doctor_email=:doctor_email ";
+        loc.sql = "SELECT * FROM nurse WHERE id !=:id AND  nurse_email=:nurse_email ";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
         if(loc.result.recordCount GT 0){      
@@ -19,15 +19,15 @@ component singleton accessors="true"{
         return loc.return; 
     }
 
-    // Mobile Number Exist Check For Doctor Service
+    // Mobile Number Exist Check For Nurse Service
     public any function mCheck(required struct formData)
     {
         var loc = {};
         var loc.return=true;
         loc.query = new query();
-        loc.query.addParam(name="doctor_mobile", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_mobile#");
+        loc.query.addParam(name="nurse_mobile", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_mobile#");
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.formData.id#");
-        loc.sql = "SELECT * FROM doctor WHERE id !=:id AND doctor_mobile=:doctor_mobile ";
+        loc.sql = "SELECT * FROM nurse WHERE id !=:id AND nurse_mobile=:nurse_mobile ";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
         if(loc.result.recordCount GT 0){      
@@ -36,7 +36,7 @@ component singleton accessors="true"{
         return loc.return; 
     }
 
-    //Get Department For Display of Department name for doctor insert form service
+    //Get Department For Display of Department name for nurse insert form service
     public query function getDept(){
         var loc = {};
         loc.query = new query();
@@ -46,41 +46,40 @@ component singleton accessors="true"{
 		return loc.result;
     }
 
-    //Add or Update Doctor Service
-    public any function saveDoctor(required struct formData,required numeric admin_id){
+    //Add or Update Nurse Service
+    public any function saveNurse(required struct formData,required numeric admin_id){
     
         var loc = {};
         loc.result = {};
-        loc.hashedPassword = BCrypt.hashPassword( arguments.formData.doctor_password );
+        loc.hashedPassword = BCrypt.hashPassword( arguments.formData.nurse_password );
         loc.query = new query();
-        loc.query.addParam(name="doctor_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_name#");
-		loc.query.addParam(name="doctor_education", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_education#");
-        loc.query.addParam(name="doctor_email", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_email#");
-		loc.query.addParam(name="doctor_address", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_address#");
-        loc.query.addParam(name="doctor_password", cfsqltype="cf_sql_varchar", value="#loc.hashedPassword#");
-		loc.query.addParam(name="doctor_mobile", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_mobile#");
-		loc.query.addParam(name="doctor_department_id", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_department_id#");
-        loc.query.addParam(name="doctor_dob", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_dob#");
-        loc.query.addParam(name="doctor_fees", cfsqltype="cf_sql_varchar", value="#arguments.formData.doctor_fees#");
+        loc.query.addParam(name="nurse_name", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_name#");
+		loc.query.addParam(name="nurse_education", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_education#");
+        loc.query.addParam(name="nurse_email", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_email#");
+		loc.query.addParam(name="nurse_address", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_address#");
+        loc.query.addParam(name="nurse_password", cfsqltype="cf_sql_varchar", value="#loc.hashedPassword#");
+		loc.query.addParam(name="nurse_mobile", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_mobile#");
+		loc.query.addParam(name="nurse_department_id", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_department_id#");
+        loc.query.addParam(name="nurse_dob", cfsqltype="cf_sql_varchar", value="#arguments.formData.nurse_dob#");
         loc.query.addParam(name="admin_id", cfsqltype="cf_sql_integer", value="#arguments.admin_id#");
         if(formData.id GT 0){
        
             loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.formData.id#");
-            loc.sql = "UPDATE doctor SET doctor_name=:doctor_name,doctor_education=:doctor_education,doctor_email=:doctor_email,doctor_address=:doctor_address,doctor_mobile=:doctor_mobile,doctor_department_id=:doctor_department_id,doctor_dob=:doctor_dob,doctor_fees=:doctor_fees";
-            if(formData.doctor_password.len() GT 0)
+            loc.sql = "UPDATE nurse SET nurse_name=:nurse_name,nurse_education=:nurse_education,nurse_email=:nurse_email,nurse_address=:nurse_address,nurse_mobile=:nurse_mobile,nurse_department_id=:nurse_department_id,nurse_dob=:nurse_dob";
+            if(formData.nurse_password.len() GT 0)
             {  
-                loc.sql &= ",doctor_password=:doctor_password";
+                loc.sql &= ",nurse_password=:nurse_password";
             }
             loc.sql &= ",updated_by=:admin_id";
             if ( len( trim( arguments.formData.image ) ) ) {
                 cffile(
                     action       = "upload",
                     filefield    = "image",
-                    destination  = "#expandPath( "./includes/upload/doctor/" )#",
+                    destination  = "#expandPath( "./includes/upload/nurse/" )#",
                     nameconflict = "MakeUnique",
                     result       = "loc.profileResult"
                 );
-                loc.sql &= " ,doctor_image=:image";
+                loc.sql &= " ,nurse_image=:image";
                 loc.query.addParam(
                     name      = "image",
                     cfsqltype = "cf_sql_varchar",
@@ -93,16 +92,16 @@ component singleton accessors="true"{
             return loc.result;
         }
         else{
-            loc.sql = "INSERT INTO doctor SET doctor_name=:doctor_name,doctor_education=:doctor_education,doctor_email=:doctor_email,doctor_address=:doctor_address,doctor_password=:doctor_password,doctor_mobile=:doctor_mobile,doctor_department_id=:doctor_department_id,doctor_dob=:doctor_dob,doctor_fees=:doctor_fees";
+            loc.sql = "INSERT INTO nurse SET nurse_name=:nurse_name,nurse_education=:nurse_education,nurse_email=:nurse_email,nurse_address=:nurse_address,nurse_password=:nurse_password,nurse_mobile=:nurse_mobile,nurse_department_id=:nurse_department_id,nurse_dob=:nurse_dob";
             if ( len( trim( arguments.formData.image ) ) ) {
                 cffile(
                     action       = "upload",
                     filefield    = "image",
-                    destination  = "#expandPath( "./includes/upload/doctor/" )#",
+                    destination  = "#expandPath( "./includes/upload/nurse/" )#",
                     nameconflict = "MakeUnique",
                     result       = "loc.profileResult"
                 );
-                loc.sql &= " ,doctor_image=:image";
+                loc.sql &= " ,nurse_image=:image";
                 loc.query.addParam(
                     name      = "image",
                     cfsqltype = "cf_sql_varchar",
@@ -112,6 +111,7 @@ component singleton accessors="true"{
             loc.sql &= ",created_by=:admin_id";
             loc.query.setSQL(loc.sql);
             loc.result = loc.query.execute().getPrefix();
+            writeDump(loc.result)
             if(loc.result.recordCount EQ 1){
                     
                 loc.returnId = 	loc.result.generatedKey;
@@ -120,20 +120,20 @@ component singleton accessors="true"{
         } 	
     }
 
-    //Display Dcotor List Service
-    public struct function doctorList(required struct formData)
+    //Display Nurse List Service
+    public struct function nurseList(required struct formData)
     { 
         var loc = {};
         loc.res = {"total": 0, "records": []};
         loc.query = new query();
-        loc.sql = "SELECT count(1) as total FROM doctor";
+        loc.sql = "SELECT count(1) as total FROM nurse";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
         loc.res.total = loc.result.total;
-        loc.sql = " SELECT *  FROM doctor LEFT JOIN department ON doctor.doctor_department_id = department.id ";
+        loc.sql = " SELECT *  FROM nurse LEFT JOIN department ON nurse.nurse_department_id = department.id ";
         if(structKeyExists(arguments.formData, "search") AND len(arguments.formData.search) GT 0){
             loc.query.addParam(name="search", cfsqltype="cf_sql_varchar", value="%#arguments.formData.search#%");
-            loc.sql &= " WHERE doctor_name LIKE :search";
+            loc.sql &= " WHERE nurse_name LIKE :search";
         }
         if(structKeyExists(arguments.formData, "order") AND len(trim(arguments.formData.order)) GT 0){
             loc.sql &= " ORDER BY #arguments.formData.order#";
@@ -148,60 +148,48 @@ component singleton accessors="true"{
 		return loc.res;
     }
 
-    //Active Status Doctor Service
-    public function isActiveDoctor(required numeric id){
+    //Active Status nurse Service
+    public function isActiveNurse(required numeric id){
         var loc={};
         loc.query= new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql = "UPDATE doctor SET isActive=!isActive WHERE id =:id";
+        loc.sql = "UPDATE nurse SET isActive=!isActive WHERE id =:id";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getPrefix();
 		return loc.result;
     }
 
-    //Delete Doctor Service
-    public function deleteDoctor(required numeric id)
+    //Delete nurse Service
+    public function deleteNurse(required numeric id)
     {
 
         var loc={};
-        var  loc.return=true;
         loc.query= new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql="SELECT * FROM appointment WHERE doctor_id =:id";
+        loc.sql="DELETE FROM nurse WHERE id=:id";
         loc.query.setSQL(loc.sql);
-        loc.result = loc.query.execute().getResult();
-        if(loc.result.recordCount GT 0){      
-            loc.return = 	false;
-        }
-        else{
-            loc.sql="DELETE FROM doctor WHERE id=:id";
-            loc.query.setSQL(loc.sql);
-            loc.query.execute();
-            loc.return= true;
-        }
-       
-        return loc.return; 
+        loc.result=loc.query.execute();
+        return loc.result; 
     }
 
-    //Get id for edit of doctor in doctor module
-    public function getDoctorById(required numeric id){
+    //Get id for edit of nurse in nurse module
+    public function getNurseById(required numeric id){
         var result = {};
-		var doctorData = queryExecute('select * from doctor where id = ?', [{value="#arguments.Id#", cfsqltype="CF_SQL_INTEGER"}]);
-		if(doctorData.recordCount GT 0){
-			result = queryGetRow(doctorData, 1);
+		var nurseData = queryExecute('select * from nurse where id = ?', [{value="#arguments.Id#", cfsqltype="CF_SQL_INTEGER"}]);
+		if(nurseData.recordCount GT 0){
+			result = queryGetRow(nurseData, 1);
 		}else{
 			result = {
 				id = 0,
-				doctor_name = '',
+				nurse_name = '',
                 image = '',
-				doctor_education = '',
-                doctor_mobile = '',
-                doctor_address = '',
-                doctor_password = '',
-                doctor_email = '',
-                doctor_dob = '',
-                doctor_fees = '',
-				doctor_department_id = '',
+				nurse_education = '',
+                nurse_mobile = '',
+                nurse_address = '',
+                nurse_password = '',
+                nurse_email = '',
+                nurse_dob = '',
+				nurse_department_id = '',
 			}
 		}
 		return result;

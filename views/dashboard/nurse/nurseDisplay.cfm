@@ -71,7 +71,7 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="fw-bold py-2 mb-4"><span class="text-dark fw-light">Dashboard /</span> Doctor</h4>
+          <h4 class="fw-bold py-2 mb-4"><span class="text-dark fw-light">Dashboard /</span> Nurse</h4>
 
 
           <form id="frm-example" >
@@ -80,24 +80,23 @@
             
   <div class="d-flex justify-content-between">
       <div class="card-header">
-          <h5>Doctor List</h5>
+          <h5>Nurse List</h5>
   </div>
   <div class="card-action">
-      <button class=" btn btn-success my-2 me-4"  type="button" id="addBtn" data-bs-toggle="modal" data-bs-target="##addDoctor" data-bs-whatever="@getbootstrap" >Add Doctor</button>
+      <button class=" btn btn-success my-2 me-4"  type="button" id="addBtn" data-bs-toggle="modal" data-bs-target="##addNurse" data-bs-whatever="@getbootstrap" >Add Nurse</button>
   </div>
 </div>
 <div class="table-responsive px-3">
-<table class="table" id="doctorList">
+<table class="table" id="nurseList">
   <thead>
     <tr>
-      <th>Doctor Name</th>
+      <th>Nurse Name</th>
       <th>Image</th>
       <th>Mobile Number</th>
       <th>Email</th>
-      <th>Fees</th>
       <th>Date of Birth</th>
       <th>Dempartment</th>
-      <th>Doctor Status</th> 
+      <th>Nurse Status</th> 
       <th>Action</th>
     </tr>
   </thead>
@@ -115,15 +114,15 @@
 
 
 
-<div class="modal fade" id="addDoctor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addNurse" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-xl">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="doctorLabel">Add New Doctor</h5>
+      <h5 class="modal-title" id="nurseLabel">Add New Nurse</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeBtn"></button>
     </div>
     <div class="modal-body">
-      <form method="POST" id="addDoctorForm" action="#event.buildLink('doctor.addDoctor')#" enctype="multipart/form-data">
+      <form method="POST" id="addNurseForm" action="#event.buildLink('nurse.addNurse')#" enctype="multipart/form-data">
         
         <div class="mb-3">
             <input type="hidden" class="form-control" name="id" value="0" id="id"/>
@@ -132,27 +131,23 @@
           <div class="col-sm-1"></div>
           <div class="col-sm-5">
             <div class="">
-              <label class="col-form-label">Doctor Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="doctor_name" id="doctor_name" value="" placeholder="Enter a Doctor Name">
+              <label class="col-form-label">Nurse Name<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" name="nurse_name" id="nurse_name" value="" placeholder="Enter a Nurse Name">
             </div> 
             <div class="">
               <label class="col-form-label">Qualification/Specialization<span class="text-danger">*</span></label>
-              <input class="form-control" name="doctor_education" id="doctor_education" value="" placeholder="Enter a Qualification & Specialization "/>
+              <input class="form-control" name="nurse_education" id="nurse_education" value="" placeholder="Enter a Qualification & Specialization "/>
             </div>
             <div class="">
               <label class="col-form-label">Date of Birth<span class="text-danger">*</span></label>
-              <input type="date" class="form-control" name="doctor_dob" id="doctor_dob" value="">
+              <input type="date" class="form-control" name="nurse_dob" id="nurse_dob" value="">
             </div>
             <div class="">
               <label class="col-form-label">Address<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="doctor_address" id="doctor_address" value="" placeholder="Enter a Doctor Address">
+              <input type="text" class="form-control" name="nurse_address" id="nurse_address" value="" placeholder="Enter a Nurse Address">
             </div>
-<!---            <!---  <div class=""> --->
-              <label class="col-form-label">Mobile Number<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="doctor_mobile" id="doctor_mobile" value="" placeholder="Enter a Doctor Mobile">
-            </div> --->
             <div class="">
-              <label class="col-form-label">Doctor Image<span class="text-danger">*</span></label>
+              <label class="col-form-label">Nurse Image<span class="text-danger">*</span></label>
               <input type="file" class="form-control" name="image" id="image" value="">
             </div>
             <div>
@@ -163,33 +158,21 @@
           <div class="col-sm-5">
             <div class="">
               <label class="col-form-label">Mobile Number<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="doctor_mobile" id="doctor_mobile" value="" placeholder="Enter a Doctor Mobile">
-            </div>
-            <!--- <div class="">
-              <label class="col-form-label">Doctor_OPD_Start_Time<span class="text-danger">*</span></label>
-              <input type="time" class="form-control" name="doctor_opd_start" id="doctor_opd_start" value="08:00">
-            </div>
-            <div class="">
-              <label class="col-form-label">Doctor_OPD_End_Time<span class="text-danger">*</span></label>
-              <input type="time" class="form-control" name="doctor_opd_end" id="doctor_opd_end" value="02:00">
-            </div> --->
-            <div class="">
-              <label class="col-form-label">Fees<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" name="doctor_fees" id="doctor_fees" value="" placeholder="Enter a Doctor Fees">
+              <input type="text" class="form-control" name="nurse_mobile" id="nurse_mobile" value="" placeholder="Enter a Nurse Mobile">
             </div>
             <div class="">
               <label class="col-form-label">Email<span class="text-danger">*</span></label>
-              <input type="email" class="form-control" name="doctor_email" id="doctor_email" value="" placeholder="Enter a Doctor Email">
+              <input type="email" class="form-control" name="nurse_email" id="nurse_email" value="" placeholder="Enter a Nurse Email">
             </div>
             <div class="">
               
               <label class="col-form-label">Password<span class="text-danger">*</span></label>
-              <input type="password" class="form-control" name="doctor_password" id="doctor_password"  value="" placeholder="Enter a Doctor Password">
+              <input type="password" class="form-control" name="nurse_password" id="nurse_password"  value="" placeholder="Enter a Nurse Password">
             </div>
            
             <div class="">
               <label class="col-form-label">Department<span class="text-danger">*</span></label>
-              <select class="form-select" name="doctor_department_id" id="doctor_department_id">
+              <select class="form-select" name="nurse_department_id" id="nurse_department_id">
                   <option value="" selected>Select Department</option>
                   <cfloop query="prc.result">
                       <option value="#prc.result.id#">#prc.result.department_name#</option>
