@@ -9,6 +9,7 @@ component extends="base" {
 	property name="appointmentService" inject="appointmentService";
 	property name="bedAllotmentServices" inject="bedAllotmentServices";
 	property name="nurseService" inject="nurseService";
+	property name="bloodBankService" inject="bloodBankService";
 
 	//Home page or Dashboard page display handler
     function index( event, rc, prc ) 
@@ -64,6 +65,12 @@ component extends="base" {
 		event.setView( "dashboard/bedAllotment/bedAllotmentDisplay" );
 	}
 
+	//Blood bank page display handler
+	function bloodBank( event, rc, prc ) 
+	{    
+        prc.result=bloodBankService.getBloodGroup();
+		event.setView( "dashboard/bloodBank/bloodBankDisplay" );
+	}
 	//Logout Functionlity Handler
 	function logout(event,rc,prc){
 		prc.check = authService.adminLogout();

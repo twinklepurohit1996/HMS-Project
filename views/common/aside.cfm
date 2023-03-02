@@ -75,6 +75,15 @@
                       </a>
                     </li>
 
+                     <!-- Blood Bank Module -->
+                     <li class="menu-item active">
+                      <a href="#event.buildLink('home.bloodBank')#" class="menu-link">
+                        <i class="fa-solid fa-building-columns me-2"></i>
+                        <div data-i18n="Analytics">Blood Bank</div>
+                      </a>
+                    </li>
+
+                    
                   </ul>
                 </aside>
 </cfoutput>
