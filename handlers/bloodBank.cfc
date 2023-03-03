@@ -42,16 +42,16 @@ component extends="base" {
 		event.renderData( data=res, type="json" );
 	}
 
-	// Update Patient handler
+	// Update Candidate handler
 	function edit( event, rc, prc ) 
 	{
-		var patientData = patientService.getPatientById(rc.id);
-		event.renderData( data=patientData, type="json" );
+		var candidateData = bloodBankService.getCandidateById(rc.id);
+		event.renderData( data=candidateData, type="json" );
 	}
 
-	//Delete Patient handler
+	//Delete Candidate handler
 	function delete(event,rc,prc){
-		var result=patientService.deletePatient(rc.id);
+		var result=bloodBankService.deleteCandidate(rc.id);
 		event.renderData( data=result, type="json" );
 	}
 

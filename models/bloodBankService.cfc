@@ -116,6 +116,7 @@ component singleton accessors="true"{
         loc.result = loc.query.execute().getResult();
         loc.res.total = loc.result.total;
         loc.sql = " SELECT *  FROM blood_bank LEFT JOIN blood_group ON blood_bank.blood_group_id = blood_group.id ";
+       
         if(structKeyExists(arguments.formData, "search") AND len(arguments.formData.search) GT 0){
             loc.query.addParam(name="search", cfsqltype="cf_sql_varchar", value="%#arguments.formData.search#%");
             loc.sql &= " WHERE candidate_name LIKE :search";
@@ -126,34 +127,36 @@ component singleton accessors="true"{
         loc.sql &= " limit #formData.start#, #formData.length# ";
         loc.query.setSQL(loc.sql);
         loc.result = loc.query.execute().getResult();
-        writeDump(loc.result);
+        /* writeDump(loc.sql);
+        abort; */
         for(loc.i in loc.result){
             arrayAppend(loc.res.records, loc.i);
         }
 		return loc.res;
     }
 
-    // Get Id for Edit Patient Service
-    public function getPatientById(required numeric id){
+    // Get Id for Edit Candidate Service
+    public function getCandidateById(required numeric id){
         writeDump(id)
         var result = {};
-		var patientData = queryExecute('select * from patient where id = ?', [{value="#arguments.Id#", cfsqltype="CF_SQL_INTEGER"}]);
-		if(patientData.recordCount GT 0){
+		var candidateData = queryExecute('select * from blood_bank where id = ?', [{value="#arguments.Id#", cfsqltype="CF_SQL_INTEGER"}]);
+		if(candidateData.recordCount GT 0){
            
-			result = queryGetRow(patientData, 1);
+			result = queryGetRow(candidateData, 1);
             
 		}else{
 			result = {
 				id = 0,
-				patient_name = '',
-                patient_mobile = '',
-                patient_email = '',
-                patient_password = '',
-                patient_address = '',
-                patient_gender='',
-                patient_blood_group_id = '',
-                patient_dob = '',
-				patient_aadhar_no = '',
+				candidate_name = '',
+                candidate_type = '',
+                mobile_number = '',
+                aadhar_number = '',
+                address = '',
+                email = '',
+                blood_group_id ='',
+                dob = '',
+                gender = '',
+				blood_unit = '',
 			}
 		}
 		return result;
@@ -161,25 +164,15 @@ component singleton accessors="true"{
 
 
     //Delete Patient Service
-    public function deletePatient(required numeric id)
+    public function deleteCandidate(required numeric id)
     {
+       
         var loc={};
-        var  loc.return=true;
         loc.query= new query();
         loc.query.addParam(name="id", cfsqltype="cf_sql_integer", value="#arguments.id#");
-        loc.sql="SELECT * FROM appointment WHERE patient_id =:id";
+        loc.sql="DELETE FROM blood_bank WHERE id=:id";
         loc.query.setSQL(loc.sql);
-        loc.result = loc.query.execute().getResult();
-        // writeDump(loc.result);
-        if(loc.result.recordCount GT 0){      
-            loc.return = 	false;
-        }
-        else{
-            loc.sql="DELETE FROM patient WHERE id=:id";
-            loc.query.setSQL(loc.sql);
-            loc.query.execute();
-            loc.return= true;
-        }
-        return loc.return; 
+        loc.result=loc.query.execute();
+        return loc.result; 
     }
 }

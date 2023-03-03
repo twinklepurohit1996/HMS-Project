@@ -212,7 +212,7 @@
                     { data: 'blood_unit' },
                     { data: 'mobile_number' },
                     { data: 'gender' },
-                    { data: 'blood_group_id' },
+                    { data: 'name' },
                     { data: 'dob' ,
                     render: function ( data) 
                         {
@@ -221,7 +221,7 @@
                     { data: 'aadhar_number'},
                     { data: 'id',render: function(data,type,row){
                         var eye = row.isActive == 1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-                        return '<a href="javascript:void(0);" onclick="deletePatient('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editPatient('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
+                        return '<a href="javascript:void(0);" onclick="deleteCandidate('+data+')"><i class="fa-solid fa-trash text-danger p-2"></i></a><a href="javascript:void(0);" onclick="editCandidate('+data+')" ><i class="fa-solid fa-edit text-success" ></i></a>'				
                         }
                     },
                 ],
@@ -231,29 +231,30 @@
        
     });
 
-    function editPatient(id){
-          $.ajax({  url: 'patient/edit/id/'+id, 
+    function editCandidate(id){
+          $.ajax({  url: 'bloodBank/edit/id/'+id, 
               success: function(result){
                 console.log(id)
-                $( "##addPatientForm" ).validate().resetForm();
-                  $("##patientLabel").text("Edit Patient")
-                  $('##addPatient').modal('show');
-                  $("##patient_password").removeAttr("required", "true");
+                $( "##addCandidateForm" ).validate().resetForm();
+                  $("##candidateLabel").text("Edit Candidate")
+                  $('##addCandidate').modal('show');
                   $('##id').val(result.id);
-                  $('##patient_name').val(result.patient_name);
-                  $('##patient_email').val(result.patient_email);
-                  $('##patient_mobile').val(result.patient_mobile);
-                  $('##patient_address').val(result.patient_address);
-                  $(`input:radio[value='${result.patient_gender}']`).attr('checked',true);
-                  $('##patient_blood_group_id').val(result.patient_blood_group_id);
-                  $('##patient_dob').val(moment(result.patient_dob).format("YYYY-MM-DD"));
-                  $('##patient_aadhar_no').val(result.patient_aadhar_no);
+                  $('##candidate_name').val(result.candidate_name);
+                  $('##candidate_type').val(result.candidate_type);
+                  $('##mobile_number').val(result.mobile_number);
+                  $('##aadhar_number').val(result.aadhar_number);
+                  $('##email').val(result.email);
+                  $('##blood_unit').val(result.blood_unit);
+                  $(`input:radio[value='${result.gender}']`).attr('checked',true);
+                  $('##blood_group_id').val(result.blood_group_id);
+                  $('##dob').val(moment(result.dob).format("YYYY-MM-DD"));
+                  $('##address').val(result.address);
                   $("##bb").text("Update"); 
               }
           });
     }
 
-    function deletePatient(id)
+    function deleteCandidate(id)
     {
         Swal.fire({
         title: 'Are you sure ?',
@@ -267,26 +268,14 @@
         {
             if (result.isConfirmed) 
             {
-                $.ajax({  url: 'patient/delete/id/'+id, 
+                $.ajax({  url: 'bloodBank/delete/id/'+id, 
                         success: function(result){
-                            console.log(result);
-                            if(result==false)
-                            {
-                                Swal.fire(
-                                'Warning!',
-                                'Appointment is already assigned this patient!!',
-                                'warning')                          
-                            }
-                            else
-                            {
-                                Swal.fire(
+                            Swal.fire(
                                 'Deleted!',
-                                'Your Patient has been deleted.',
+                                'Your blood Bank record has been deleted.',
                                 'success')
-                                $('##patientList').DataTable().ajax.reload();  
-                                    
-                            }
-            }});
+                                $('##candidateList').DataTable().ajax.reload();
+                    }});
         }
     });
 
