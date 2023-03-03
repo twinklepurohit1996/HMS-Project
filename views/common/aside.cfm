@@ -83,6 +83,14 @@
                       </a>
                     </li>
 
+                    <!-- Pharmacy Module -->
+                    <li class="menu-item active">
+                      <a href="#event.buildLink('home.pharmacy')#" class="menu-link">
+                        <i class="fa-solid fa-capsules me-2"></i>                        
+                        <div data-i18n="Analytics">Pharmacy</div>
+                      </a>
+                    </li>
+
                     
                   </ul>
                 </aside>

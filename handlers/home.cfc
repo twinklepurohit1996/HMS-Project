@@ -71,6 +71,13 @@ component extends="base" {
         prc.result=bloodBankService.getBloodGroup();
 		event.setView( "dashboard/bloodBank/bloodBankDisplay" );
 	}
+
+	//pharmacy page display handler
+	function pharmacy( event, rc, prc ) 
+	{    
+        // prc.result=bloodBankService.getBloodGroup();
+		event.setView( "dashboard/pharmacy/pharmacyDisplay" );
+	}
 	//Logout Functionlity Handler
 	function logout(event,rc,prc){
 		prc.check = authService.adminLogout();
